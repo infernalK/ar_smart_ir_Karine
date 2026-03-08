@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
 
-from homeassistant.helpers.typing import ConfigType
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.typing import ConfigType
+from homeassistant.config_entries import ConfigEntry
 
 from .const import DOMAIN, PLATFORMS
 
@@ -11,17 +13,17 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Set up SmartIR component."""
+    """Set up AR Smart IR component."""
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry):
-    """Set up SmartIR from a config entry."""
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up AR Smart IR from a config entry."""
 
-    platform = entry.data.get("platform")
+    platform: str | None = entry.data.get("platform")
 
     if platform not in PLATFORMS:
-        _LOGGER.error("Unsupported SmartIR platform: %s", platform)
+        _LOGGER.error("Unsupported AR Smart IR platform: %s", platform)
         return False
 
     await hass.config_entries.async_forward_entry_setups(entry, [platform])
@@ -29,9 +31,12 @@ async def async_setup_entry(hass: HomeAssistant, entry):
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry):
-    """Unload SmartIR config entry."""
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Unload AR Smart IR config entry."""
 
-    platform = entry.data.get("platform")
+    platform: str | None = entry.data.get("platform")
+
+    if platform not in PLATFORMS:
+        return True
 
     return await hass.config_entries.async_unload_platforms(entry, [platform])
