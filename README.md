@@ -84,9 +84,10 @@ config/
         ├── translations/
         │   └── en.json
         ├── codes/
-        │   └── climate
-        │   └── media_player
-        │   └── light
+        │   └── climate/
+        │   └── media_player/
+        │   └── light/
+        │   └── fan/
         └── icons.json
 
 ---
