@@ -1,34 +1,33 @@
 # AR Smart IR
 
-
-# AR Smart IR
+[![GitHub release](https://img.shields.io/github/v/release/marsh4200/ar_smart_ir.svg)](https://github.com/marsh4200/ar_smart_ir/releases)
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
 [![Open your Home Assistant instance and open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?repository=marsh4200/ar_smart_ir&category=integration)
 
-**AR Smart IR** is a modern infrared control integration for Home Assistant that lets you add and manage IR devices directly from the **Integrations UI** — with **no YAML required**.
+**AR Smart IR** is a modern infrared control integration for **Home Assistant** that allows you to control devices such as **TVs, air conditioners, projectors, fans, lights, and media players** using IR transmitters.
 
-**AR Smart IR** is a custom Home Assistant integration for controlling **infrared devices** such as **TVs, air conditioners, projectors, fans, lights, and media players** using supported IR transmitters.
-
-Built for modern Home Assistant systems, **AR Smart IR** removes the need for old-style YAML setup and allows device configuration directly through the **Integrations UI**.
+Built for modern Home Assistant systems, **AR Smart IR removes the need for YAML configuration** and allows devices to be added directly through the **Integrations UI**.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-- 🌡️ Control **climate devices** such as air conditioners
-- 📺 Control **media players** such as TVs and projectors
+- 🌡️ Control **climate devices** (air conditioners)
+- 📺 Control **media players** (TVs, projectors, receivers)
 - 🌀 Control **fans**
 - 💡 Control **lights**
-- ⚙️ Works with modern **config flow**
-- 🖥️ Setup through **Home Assistant UI**
+- ⚙️ Uses modern **Config Flow**
+- 🖥️ Setup directly from **Home Assistant UI**
 - 🚫 **No YAML configuration required**
-- ⚡ Improved compatibility with newer Home Assistant versions
+- ⚡ Updated compatibility with modern Home Assistant versions
+- 📡 Uses a **local IR codes database**
 
 ---
 
-## 🚀 Supported Controller Methods
+# 🚀 Supported Controller Methods
 
-AR Smart IR supports infrared control through compatible Home Assistant services and controller platforms, including:
+AR Smart IR works with multiple IR transmitters supported by Home Assistant:
 
 - **ESPHome IR transmitters**
 - **MQTT publish services**
@@ -38,84 +37,104 @@ AR Smart IR supports infrared control through compatible Home Assistant services
 
 ---
 
-## 🆕 What Makes AR Smart IR Different?
+# 🆕 What Makes AR Smart IR Different?
 
-AR Smart IR is designed to modernize legacy IR control in Home Assistant.
+AR Smart IR modernizes legacy infrared integrations by removing complex setup steps.
 
-### Key improvements:
-- ✅ **No more `configuration.yaml` setup required**
-- ✅ Device setup is done inside **Settings → Devices & Services**
-- ✅ Uses **Config Flow** for easier installation
-- ✅ Cleaner structure for modern Home Assistant versions
-- ✅ Improved async handling and updated compatibility
-- ✅ Easier for users who want UI-based setup instead of manual config
+### Improvements
+
+- ✅ No more `configuration.yaml`
+- ✅ Setup through **Settings → Devices & Services**
+- ✅ Modern **Config Flow installation**
+- ✅ Cleaner integration structure
+- ✅ Better compatibility with newer Home Assistant versions
+- ✅ Faster async processing
+- ✅ Easier installation for users and installers
 
 ---
 
-📦 Installation
-Manual Installation
+# 📦 Installation
 
-Copy the integration into your Home Assistant custom_components directory:
+## Install via HACS (Recommended)
 
+Click the button below to open the repository in HACS:
+
+[![Open your Home Assistant instance and open this repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?repository=marsh4200/ar_smart_ir&category=integration)
+
+---
+
+##### Manual Installation
+
+Copy the integration into your Home Assistant `custom_components` directory:
+
+```text
 config/
 └── custom_components/
     └── ar_smart_ir/
         ├── __init__.py
         ├── manifest.json
         ├── config_flow.py
-        ├── controller.py
         ├── climate.py
         ├── fan.py
         ├── light.py
         ├── media_player.py
+        ├── controller.py
         ├── services.yaml
         ├── strings.json
-        ├── icons.json
-        │
         ├── translations/
         │   └── en.json
-        │
-        └── codes/
-            ├── climate/
-            │   └── example_ac.json
-            ├── media_player/
-            │   └── example_tv.json
-            ├── fan/
-            │   └── example_fan.json
-            └── light/
-                └── example_light.json
+        └── icons.json
 
-Then:
+---
 
-Restart Home Assistant
+# 🔧 Setup
 
-Go to Settings → Devices & Services
+After installation:
 
-Click Add Integration
+1. Restart **Home Assistant**
+2. Go to **Settings → Devices & Services**
+3. Click **Add Integration**
+4. Search for **AR Smart IR**
+5. Follow the setup wizard
 
-Search for AR Smart IR
+---
 
-Complete setup directly in the UI
+# 📡 IR Codes Database
 
-🧩 Integration Setup
+AR Smart IR uses a **local IR code database** stored in the integration.
 
-Unlike older IR integrations, AR Smart IR no longer depends on YAML configuration.
+Location:
 
-Everything is handled through the Integrations UI, making setup faster and easier.
 
-Setup path:
+custom_components/ar_smart_ir/codes/
 
-Settings → Devices & Services → Add Integration → AR Smart IR
 
-This means:
+Each supported device type has its own folder.
 
-no manual YAML entries
+Example:
 
-no restarting just to change settings
 
-easier setup for normal users and installers
+codes/climate
+codes/media_player
+codes/fan
+codes/light
 
-cleaner long-term maintenance
+
+Each device is defined using a **JSON command file**.
+
+Example structure:
+
+```json
+{
+  "manufacturer": "ExampleBrand",
+  "supportedModels": ["Model123"],
+  "commands": {
+    "power_on": "2600 0000 006D 0022 ...",
+    "power_off": "2600 0000 006D 0022 ..."
+  }
+}
+
+This system allows new devices to be easily added to the database.
 
 🏠 Supported Device Types
 
@@ -129,4 +148,4 @@ Fans
 
 Lights
 
-Device control is handled using IR command codes transmitted through supported Home Assistant controller services.
+Device control is achieved by sending infrared commands through supported controller platforms.
