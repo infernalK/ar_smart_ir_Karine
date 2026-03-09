@@ -93,7 +93,7 @@ config/
         │       └── 1000.json
         │   └── fan/
         │       └── 1000.json
-        └── icons.json
+        └── icons.png
 
 ---
 
