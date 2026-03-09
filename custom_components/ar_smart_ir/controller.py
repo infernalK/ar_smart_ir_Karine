@@ -17,6 +17,7 @@ XIAOMI_CONTROLLER = "Xiaomi"
 MQTT_CONTROLLER = "MQTT"
 LOOKIN_CONTROLLER = "LOOKin"
 ESPHOME_CONTROLLER = "ESPHome"
+TUYA_CONTROLLER = "Tuya"
 
 ENC_BASE64 = "Base64"
 ENC_HEX = "Hex"
@@ -28,6 +29,7 @@ XIAOMI_COMMANDS_ENCODING = [ENC_PRONTO, ENC_RAW]
 MQTT_COMMANDS_ENCODING = [ENC_RAW]
 LOOKIN_COMMANDS_ENCODING = [ENC_PRONTO, ENC_RAW]
 ESPHOME_COMMANDS_ENCODING = [ENC_RAW]
+TUYA_COMMANDS_ENCODING = [ENC_RAW]
 
 
 def get_controller(hass, controller, encoding, controller_data, delay):
@@ -39,6 +41,7 @@ def get_controller(hass, controller, encoding, controller_data, delay):
         MQTT_CONTROLLER: MQTTController,
         LOOKIN_CONTROLLER: LookinController,
         ESPHOME_CONTROLLER: ESPHomeController,
+        TUYA_CONTROLLER: TuyaController,
     }
 
     try:
@@ -205,5 +208,26 @@ class ESPHomeController(AbstractController):
         await self.hass.services.async_call(
             "esphome",
             self._controller_data,
+            service_data,
+        )
+
+
+class TuyaController(AbstractController):
+
+    def check_encoding(self, encoding):
+
+        if encoding not in TUYA_COMMANDS_ENCODING:
+            raise Exception("Encoding not supported by Tuya controller.")
+
+    async def send(self, command):
+
+        service_data = {
+            ATTR_ENTITY_ID: self._controller_data,
+            "command": command,
+        }
+
+        await self.hass.services.async_call(
+            "remote",
+            "send_command",
             service_data,
         )
