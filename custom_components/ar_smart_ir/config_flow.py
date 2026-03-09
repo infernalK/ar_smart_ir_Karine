@@ -34,6 +34,7 @@ CONTROLLERS = [
     "MQTT",
     "LOOKin",
     "ESPHome",
+    "Tuya",
 ]
 
 
@@ -177,7 +178,7 @@ class ARSmartIRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=data,
             )
 
-        if controller in ["Broadlink", "Xiaomi", "ESPHome"]:
+        if controller in ["Broadlink", "Xiaomi", "ESPHome", "Tuya"]:
             controller_field = selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="remote")
             )
