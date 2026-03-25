@@ -79,6 +79,12 @@ def _humidity_sensor_selector():
     )
 
 
+def _optional_entity_field(config_key: str, data: dict[str, Any]):
+    if data.get(config_key):
+        return vol.Optional(config_key, default=data.get(config_key))
+    return vol.Optional(config_key)
+
+
 class ARSmartIRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
@@ -343,16 +349,10 @@ class ARSmartIROptionsFlow(config_entries.OptionsFlow):
 
         if data.get(CONF_PLATFORM) == "climate":
             schema[
-                vol.Optional(
-                    CONF_TEMPERATURE_SENSOR,
-                    default=data.get(CONF_TEMPERATURE_SENSOR, ""),
-                )
+                _optional_entity_field(CONF_TEMPERATURE_SENSOR, data)
             ] = _temperature_sensor_selector()
             schema[
-                vol.Optional(
-                    CONF_HUMIDITY_SENSOR,
-                    default=data.get(CONF_HUMIDITY_SENSOR, ""),
-                )
+                _optional_entity_field(CONF_HUMIDITY_SENSOR, data)
             ] = _humidity_sensor_selector()
 
         schema[
