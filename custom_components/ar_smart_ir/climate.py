@@ -189,6 +189,14 @@ class SmartIRClimate(ClimateEntity, RestoreEntity):
         return self._current_fan_mode
 
     @property
+    def swing_modes(self):
+        return self._swing_modes
+
+    @property
+    def swing_mode(self):
+        return self._current_swing_mode
+        
+    @property
     def supported_features(self):
         return self._support_flags
 
